@@ -58,12 +58,19 @@
     
 </article>
 
+<h3>Comments </h3>
 
-
-    
-    
-  
-
-
+<ul>
+{% if article.comments.all %}
+    {% for comment in article.comments.all %}
+        <li>
+            <p>By {{ comment.author }} - {{ comment.published_at.isoformat }}</p>
+            <p>{{ comment.content }}</p>
+        </li>
+    {% endfor %}
+{% else %}
+    No comments here
+{% endif %}
+</ul>
 
 {% endblock %}
