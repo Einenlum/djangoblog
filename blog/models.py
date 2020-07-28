@@ -20,3 +20,10 @@ class Article(models.Model):
             self.slug = slugify(self.title)
 
         return super().save(*args, **kwargs)
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    published_at = models.DateTimeField(default=datetime.now)
