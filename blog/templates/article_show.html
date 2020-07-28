@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+
+
+{% block center_content %}
+
+<article>
+
+    <h1>{{ article.title }}</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2019-03-11T00:00:00Z">Mar 11, 2019</time>
+        </li>
+        <li>By {{ article.author }}</li>
+        
+        <li>
+            Categories:
+            <em>
+                
+                    
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/categories/themes">themes</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/categories/syntax">syntax</a>
+                
+            </em>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/markdown">#markdown</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/css">#css</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/html">#html</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/themes">#themes</a>
+                
+            </em>
+        </li>
+
+        <li>{{ article.read_in_minutes }} minute{{ article.read_in_minutes|pluralize }} read</li>
+    </ul>
+</aside>
+
+    
+{{ article.content }}
+    
+</article>
+
+
+
+    
+    
+  
+
+
+
+{% endblock %}

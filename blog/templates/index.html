@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+
+
+{% block center_content %}
+
+<section id="home">
+  <ul>
+    {% for article in articles %}
+
+
+    <li class="first" >
+      <h1><a href="{{ article.get_absolute_url }}" title="{{ article.title }}">{{ article.title }}</a></h1>
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="{{ article.published_at.isoformat }}">
+            {{ article.published_at.day }}
+            /
+            {{ article.published_at.month }}
+            /
+            {{ article.published_at.year }}
+            </time>
+        </li>
+
+        <li>By {{ article.author }}</li>
+        
+        <li>
+            Categories:
+            <em>
+                
+                    
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/categories/themes">themes</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/categories/syntax">syntax</a>
+                
+            </em>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/markdown">#markdown</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/css">#css</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/html">#html</a>
+                
+                    , 
+                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/themes">#themes</a>
+                
+            </em>
+        </li>
+        
+
+        <li>3 minutes read</li>
+    </ul>
+</aside>
+
+      
+
+      <p>{{ article.content }}</p>
+      
+      <a href="https://themes.gohugo.io//theme/hugo-kiera/post/markdown-syntax/">Read more…</a>
+      
+    </li>
+    
+
+    {% endfor %}
+    
+    
+
+  </ul>
+</section>
+
+
+<ul class="pagination">
+  <li class="page-item">
+    <a href="https://themes.gohugo.io//theme/hugo-kiera/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+  </li>
+  <li class="page-item disabled">
+    <a  class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+  </li>
+  <li class="page-item active">
+    <a class="page-link" href="https://themes.gohugo.io//theme/hugo-kiera/">1</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://themes.gohugo.io//theme/hugo-kiera/page/2/">2</a>
+  </li>
+  <li class="page-item">
+    <a href="https://themes.gohugo.io//theme/hugo-kiera/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="https://themes.gohugo.io//theme/hugo-kiera/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+  </li>
+</ul>
+
+{% endblock %}

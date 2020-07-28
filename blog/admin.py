@@ -10,6 +10,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'published_at', 'article', 'content')
+    
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Article, ArticleAdmin)
