@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-
+{% load markdownify %}
 
 {% block center_content %}
 
@@ -59,15 +59,15 @@
         </li>
         
 
-        <li>3 minutes read</li>
+        <li>{{ article.read_in_minutes }} minute{{ article.read_in_minutes|pluralize }} read</li>
     </ul>
 </aside>
 
       
 
-      <p>{{ article.content }}</p>
+      <p>{{ article.content|markdownify }}</p>
       
-      <a href="https://themes.gohugo.io//theme/hugo-kiera/post/markdown-syntax/">Read more…</a>
+      <a href="{{ article.get_absolute_url }}">Read more…</a>
       
     </li>
     

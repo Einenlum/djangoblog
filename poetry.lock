@@ -11,6 +11,19 @@ tests = ["pytest", "pytest-asyncio"]
 
 [[package]]
 category = "main"
+description = "An easy safelist-based HTML-sanitizing tool."
+name = "bleach"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "3.1.5"
+
+[package.dependencies]
+packaging = "*"
+six = ">=1.9.0"
+webencodings = "*"
+
+[[package]]
+category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
@@ -28,11 +41,63 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "main"
+description = "Markdown template filter for Django."
+name = "django-markdownify"
+optional = false
+python-versions = "*"
+version = "0.8.1"
+
+[package.dependencies]
+Django = "*"
+bleach = ">=2.0"
+markdown = "*"
+
+[[package]]
+category = "main"
+description = "Python implementation of Markdown."
+name = "markdown"
+optional = false
+python-versions = ">=3.5"
+version = "3.2.2"
+
+[package.extras]
+testing = ["coverage", "pyyaml"]
+
+[[package]]
+category = "main"
+description = "Core utilities for Python packages"
+name = "packaging"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "20.4"
+
+[package.dependencies]
+pyparsing = ">=2.0.2"
+six = "*"
+
+[[package]]
+category = "main"
+description = "Python parsing module"
+name = "pyparsing"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "2.4.7"
+
+[[package]]
+category = "main"
 description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
 python-versions = "*"
 version = "2020.1"
+
+[[package]]
+category = "main"
+description = "Python 2 and 3 compatibility utilities"
+name = "six"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "1.15.0"
 
 [[package]]
 category = "main"
@@ -42,8 +107,16 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.3.1"
 
+[[package]]
+category = "main"
+description = "Character encoding aliases for legacy web content"
+name = "webencodings"
+optional = false
+python-versions = "*"
+version = "0.5.1"
+
 [metadata]
-content-hash = "9a22ae8701d600cdee8e5c29a6f06806a97dc36b92dd3424f0235dc8655c3c35"
+content-hash = "6c921db5fc21973e9e70f8d620dbc3ff21017aaa40c24d32dfe08c52b8c25c65"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -51,15 +124,43 @@ asgiref = [
     {file = "asgiref-3.2.10-py3-none-any.whl", hash = "sha256:9fc6fb5d39b8af147ba40765234fa822b39818b12cc80b35ad9b0cef3a476aed"},
     {file = "asgiref-3.2.10.tar.gz", hash = "sha256:7e51911ee147dd685c3c8b805c0ad0cb58d360987b56953878f8c06d2d1c6f1a"},
 ]
+bleach = [
+    {file = "bleach-3.1.5-py2.py3-none-any.whl", hash = "sha256:2bce3d8fab545a6528c8fa5d9f9ae8ebc85a56da365c7f85180bfe96a35ef22f"},
+    {file = "bleach-3.1.5.tar.gz", hash = "sha256:3c4c520fdb9db59ef139915a5db79f8b51bc2a7257ea0389f30c846883430a4b"},
+]
 django = [
     {file = "Django-3.0.8-py3-none-any.whl", hash = "sha256:5457fc953ec560c5521b41fad9e6734a4668b7ba205832191bbdff40ec61073c"},
     {file = "Django-3.0.8.tar.gz", hash = "sha256:31a5fbbea5fc71c99e288ec0b2f00302a0a92c44b13ede80b73a6a4d6d205582"},
+]
+django-markdownify = [
+    {file = "django-markdownify-0.8.1.tar.gz", hash = "sha256:5460fc41db2da02c57e2f49f55258aa71a74af48c21b7989985b0a860069a954"},
+    {file = "django_markdownify-0.8.1-py3-none-any.whl", hash = "sha256:c9406e1187c68f2ad9e251bf7b586dd4c9309021fafce2c83be99584cb130173"},
+]
+markdown = [
+    {file = "Markdown-3.2.2-py3-none-any.whl", hash = "sha256:c467cd6233885534bf0fe96e62e3cf46cfc1605112356c4f9981512b8174de59"},
+    {file = "Markdown-3.2.2.tar.gz", hash = "sha256:1fafe3f1ecabfb514a5285fca634a53c1b32a81cb0feb154264d55bf2ff22c17"},
+]
+packaging = [
+    {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
+    {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
+]
+pyparsing = [
+    {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
+    {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pytz = [
     {file = "pytz-2020.1-py2.py3-none-any.whl", hash = "sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed"},
     {file = "pytz-2020.1.tar.gz", hash = "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"},
 ]
+six = [
+    {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
+    {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
+]
 sqlparse = [
     {file = "sqlparse-0.3.1-py2.py3-none-any.whl", hash = "sha256:022fb9c87b524d1f7862b3037e541f68597a730a8843245c349fc93e1643dc4e"},
     {file = "sqlparse-0.3.1.tar.gz", hash = "sha256:e162203737712307dfe78860cc56c8da8a852ab2ee33750e33aeadf38d12c548"},
+]
+webencodings = [
+    {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},
+    {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]

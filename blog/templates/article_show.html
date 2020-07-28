@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-
+{% load markdownify %}
 
 {% block center_content %}
 
@@ -54,7 +54,7 @@
 </aside>
 
     
-{{ article.content }}
+{{ article.content|markdownify }}
     
 </article>
 
