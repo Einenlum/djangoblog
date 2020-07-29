@@ -5,6 +5,14 @@
 {% block center_content %}
 
 <section id="home">
+
+
+    {% if user.is_authenticated %}
+      <div style="margin-right:0; text-align: right">
+        <a href="{% url 'article_create' %}">Add an article</a>
+      </div> 
+    {% endif %}
+
   <ul>
     {% for article in page %}
 
