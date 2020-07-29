@@ -7,7 +7,7 @@
 <section id="home">
     <h1>{{ user.username }}</h1>
   <ul>
-    {% for article in user.articles.all %}
+    {% for article in page %}
 
     <li class="first" >
       <h2><a href="{{ article.get_absolute_url }}" title="{{ article.title }}">{{ article.title }}</a></h2>
@@ -43,26 +43,6 @@
   </ul>
 </section>
 
-
-<ul class="pagination">
-  <li class="page-item">
-    <a href="https://themes.gohugo.io//theme/hugo-kiera/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-  </li>
-  <li class="page-item disabled">
-    <a  class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-  </li>
-  <li class="page-item active">
-    <a class="page-link" href="https://themes.gohugo.io//theme/hugo-kiera/">1</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="https://themes.gohugo.io//theme/hugo-kiera/page/2/">2</a>
-  </li>
-  <li class="page-item">
-    <a href="https://themes.gohugo.io//theme/hugo-kiera/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="https://themes.gohugo.io//theme/hugo-kiera/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-  </li>
-</ul>
+{% include 'pagination.html' with current_page_url=author.get_author_absolute_url %}
 
 {% endblock %}
