@@ -1,7 +1,10 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseNotFound, HttpRequest
+from django.urls import reverse_lazy
 from django.views.defaults import page_not_found
+from django.views import generic
 from .models import Article, Category, User
 
 def index(request: HttpRequest):
