@@ -31,7 +31,7 @@
 
       
 
-      <p>{{ article.content|markdownify }}</p>
+      <p>{{ article.content|markdownify|truncatechars:200 }}</p>
       
       <a href="{{ article.get_absolute_url }}">Read more…</a>
       
