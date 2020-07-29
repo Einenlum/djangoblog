@@ -19,35 +19,14 @@
         <li>
             Categories:
             <em>
-                
+                {% for category in article.categories.all %}
                     
-                    <a href="https://themes.gohugo.io//theme/hugo-kiera/categories/themes">themes</a>
-                
-                    , 
-                    <a href="https://themes.gohugo.io//theme/hugo-kiera/categories/syntax">syntax</a>
-                
-            </em>
-        </li>
-        
+                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>,
+                {% endfor %}
 
-        
-        <li>
-            <em>
-                
-                    
-                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/markdown">#markdown</a>
-                
-                    , 
-                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/css">#css</a>
-                
-                    , 
-                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/html">#html</a>
-                
-                    , 
-                    <a href="https://themes.gohugo.io//theme/hugo-kiera/tags/themes">#themes</a>
-                
             </em>
         </li>
+        
 
         <li>{{ article.read_in_minutes }} minute{{ article.read_in_minutes|pluralize }} read</li>
     </ul>
