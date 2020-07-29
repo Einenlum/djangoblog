@@ -30,7 +30,7 @@ def category_index(request: HttpRequest):
 
 def category_show(request: HttpRequest, pk):
     category = get_object_or_404(Category, pk=pk)
-    p = Paginator(category.articles.all(), 2)
+    p = Paginator(category.articles.order_by('-published_at'), 2)
     page = request.GET.get('page', 1)
 
     return render(request, 'category_show.html', {'category': category, 'page': p.get_page(page)})

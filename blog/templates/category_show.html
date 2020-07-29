@@ -7,6 +7,7 @@
 <section id="home">
     <h1>{{ category.name }}</h1>
   <ul>
+    {% if page|length %}
     {% for article in page %}
 
     <li class="first" >
@@ -39,6 +40,9 @@
     
 
     {% endfor %}
+    {% else %}
+    <p>No article here for now.</p>
+    {% endif %}
     
     
 
