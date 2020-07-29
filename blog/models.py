@@ -49,9 +49,8 @@ class Article(models.Model):
 
         return 1
 
-    @property
     def get_absolute_url(self):
-        return reverse("article_show", kwargs={"article_slug": self.slug})
+        return reverse("article_show", kwargs={"slug": self.slug})
     
 
 

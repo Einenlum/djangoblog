@@ -14,8 +14,8 @@ def index(request: HttpRequest):
 
     return render(request, 'index.html', {'page': p.get_page(page)})
 
-def article_show(request: HttpRequest, article_slug):
-    article = get_object_or_404(Article, slug=article_slug)
+def article_show(request: HttpRequest, slug):
+    article = get_object_or_404(Article, slug=slug)
     
     return render(request, 'article_show.html', {'article': article})
 
@@ -57,6 +57,12 @@ class ArticleCreate(generic.CreateView):
         article.save()
 
         return redirect(article.get_absolute_url)
+
+
+class ArticleEdit(generic.UpdateView):
+    model = Article
+    fields = ('title', 'content', 'categories')
+    template_name = 'article_edit.html'
 
 
 class Signup(generic.CreateView):

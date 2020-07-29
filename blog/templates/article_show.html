@@ -8,6 +8,10 @@
 
     <h1>{{ article.title }}</h1>
 
+    {% if user.is_authenticated %}
+        <div><a href="{% url 'article_edit' slug=article.slug %}">Edit this article</a></div>
+    {% endif %}
+
     
       <aside>
     <ul>
