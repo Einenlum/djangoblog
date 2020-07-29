@@ -37,7 +37,7 @@ def category_show(request: HttpRequest, pk):
 
 def author_show(request: HttpRequest, username):
     author = get_object_or_404(User, username=username)
-    p = Paginator(author.articles.all(), 2)
+    p = Paginator(author.articles.order_by('-published_at'), 2)
     page = request.GET.get('page', 1)
 
     return render(request, 'author_show.html', {'author': author, 'page': p.get_page(page)})

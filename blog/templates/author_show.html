@@ -6,6 +6,7 @@
 
 <section id="home">
     <h1>{{ user.username }}</h1>
+    {% if page|length %}
   <ul>
     {% for article in page %}
 
@@ -41,6 +42,9 @@
     
 
   </ul>
+  {% else %}
+  <p>No article here for now.</p>
+  {% endif %}
 </section>
 
 {% include 'pagination.html' with current_page_url=author.get_author_absolute_url %}
