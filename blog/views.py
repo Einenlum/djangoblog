@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound, HttpRequest
@@ -46,7 +48,7 @@ def handler404(request: HttpRequest, exception, template_name="error_404.html"):
     return response
 
 
-class ArticleCreate(generic.CreateView):
+class ArticleCreate(LoginRequiredMixin, generic.CreateView):
     model = Article
     fields = ('title', 'content', 'categories')
     template_name = 'article_create.html'
@@ -59,10 +61,18 @@ class ArticleCreate(generic.CreateView):
         return redirect(article.get_absolute_url)
 
 
-class ArticleEdit(generic.UpdateView):
+class ArticleEdit(LoginRequiredMixin, generic.UpdateView):
     model = Article
     fields = ('title', 'content', 'categories')
     template_name = 'article_edit.html'
+
+    def get(self, *args, **kwargs):
+        # super().get populates the article in the self.object attribute
+        template_response = super(generic.UpdateView, self).get(*args, **kwargs)
+        if self.object.author != self.request.user:
+            raise PermissionDenied()
+
+        return template_response
 
 
 class Signup(generic.CreateView):
