@@ -6,7 +6,7 @@ from django.shortcuts import reverse
 
 
 class User(AbstractUser):
-    pass
+    username = models.CharField(max_length=255, blank=False, null=False, unique=True)
 
     def get_author_absolute_url(self):
         return reverse("author_show", kwargs={"username": self.username})
