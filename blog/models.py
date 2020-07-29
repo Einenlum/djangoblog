@@ -8,6 +8,8 @@ from django.shortcuts import reverse
 class User(AbstractUser):
     pass
 
+    def get_author_absolute_url(self):
+        return reverse("author_show", kwargs={"username": self.username})
 
 class Category(models.Model):
     name = models.CharField(max_length=255)

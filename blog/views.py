@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseNotFound
 from django.views.defaults import page_not_found
-from .models import Article, Category
+from .models import Article, Category, User
 
 def index(request):
     articles = Article.objects.order_by('-published_at')
@@ -22,6 +22,11 @@ def category_show(request, pk):
     category = get_object_or_404(Category, pk=pk)
 
     return render(request, 'category_show.html', {'category': category})
+
+def author_show(request, username):
+    author = get_object_or_404(User, username=username)
+
+    return render(request, 'author_show.html', {'author': author})
 
 def handler404(request, exception, template_name="error_404.html"):
     response = render(request, template_name)

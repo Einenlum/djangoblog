@@ -23,7 +23,7 @@
             </time>
         </li>
 
-        <li>By {{ article.author }}</li>
+        <li>By <a href="{{ article.author.get_author_absolute_url }}">{{ article.author }}</a></li>
 
         <li>{{ article.read_in_minutes }} minute{{ article.read_in_minutes|pluralize }} read</li>
     </ul>
