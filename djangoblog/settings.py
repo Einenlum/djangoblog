@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import environ
 
-env = environ.Env()
+env = environ.Env(
+    USE_DEVELOPMENT_ENV=(bool, False)
+)
 
 if os.path.exists('./.env'):
     env.read_env(env.str('./', '.env'))
@@ -29,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('USE_DEVELOPMENT_ENV')
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,8 +49,13 @@ INSTALLED_APPS = [
     'blog',
 ]
 
-MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+MIDDLEWARE = []
+if env('USE_DEVELOPMENT_ENV'):
+    MIDDLEWARE = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+
+MIDDLEWARE = MIDDLEWARE + [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,12 +89,25 @@ WSGI_APPLICATION = 'djangoblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if env('USE_DEVELOPMENT_ENV'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
+        }
+    }
+
 
 AUTH_USER_MODEL = 'blog.User'
 
