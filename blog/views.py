@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -7,7 +8,7 @@ from django.http import HttpResponseNotFound, HttpRequest
 from django.urls import reverse_lazy
 from django.views.defaults import page_not_found
 from django.views import generic
-from .models import Article, Category, User
+from .models import Article, Category, Comment, User
 from .forms import CustomUserCreationForm
 
 def index(request: HttpRequest):
@@ -82,6 +83,14 @@ class ArticleEdit(LoginRequiredMixin, generic.UpdateView):
             raise PermissionDenied()
 
         return template_response
+
+@login_required
+def comment_create(request, article_slug):
+    article = get_object_or_404(Article, slug=article_slug)
+    comment = Comment.create(request.user, article, request.POST.get('comment_content'))
+    comment.save()
+
+    return redirect(article.get_absolute_url())
 
 
 class Signup(generic.CreateView):

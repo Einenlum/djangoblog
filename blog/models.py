@@ -1,3 +1,4 @@
+from __future__ import annotations
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
@@ -50,6 +51,10 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse("article_show", kwargs={"slug": self.slug})
+
+    @property
+    def comments_ordered_by_last(self):
+        return self.comments.order_by('-published_at')
     
 
 
@@ -58,3 +63,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
     published_at = models.DateTimeField(auto_now_add=True)
+
+    @classmethod
+    def create(cls, author, article, content) -> Comment:
+        return cls(article=article, author=author, content=content)

@@ -11,4 +11,5 @@ urlpatterns = [
     path('categories/<pk>', views.category_show, name='category_show'),
     path('author/<username>', views.author_show, name='author_show'),
     path('auth/signup', views.Signup.as_view(), name='signup'),
+    path('<article_slug>/comment/create/', views.comment_create, name='comment_create')
 ]
