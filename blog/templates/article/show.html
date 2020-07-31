@@ -36,6 +36,11 @@
     </ul>
 </aside>
 
+{% if article.cover %}
+    <div>
+        <img src="{{ article.cover.url }}" alt="cover" />
+    </div>
+{% endif %}
     
 {{ article.content|markdownify }}
     

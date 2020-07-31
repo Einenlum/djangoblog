@@ -28,6 +28,7 @@ class Category(models.Model):
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
     content = models.TextField()
+    cover = models.ImageField(null=True, blank=True, upload_to='images/articles/covers/')
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     published_at = models.DateTimeField(auto_now_add=True)

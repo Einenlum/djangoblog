@@ -3,8 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
+
+from pprint import pprint
 
 from blog.models import Article
 
@@ -24,15 +26,18 @@ def article_show(request: HttpRequest, slug):
 
 class ArticleCreate(LoginRequiredMixin, generic.CreateView):
     model = Article
-    fields = ('title', 'content', 'categories')
+    fields = ('title', 'content', 'cover', 'categories')
     template_name = 'article/create.html'
 
     def form_valid(self, form):
+        pprint(form)
         article = form.save(commit=False)
         article.author = self.request.user
         article.save()
+        
 
-        return redirect(article.get_absolute_url())
+        return super().form_valid(form)
+        #return redirect(article.get_absolute_url())
 
 
 def article_search(request):
@@ -45,7 +50,7 @@ def article_search(request):
 
 class ArticleEdit(LoginRequiredMixin, generic.UpdateView):
     model = Article
-    fields = ('title', 'content', 'categories')
+    fields = ('title', 'content', 'cover', 'categories')
     template_name = 'article/edit.html'
 
     def get(self, *args, **kwargs):

@@ -10,6 +10,7 @@ python = "^3.8"
 django = "^3.0.8"
 django-markdownify = "^0.8.1"
 django-debug-toolbar = "^2.2"
+Pillow = "^7.2.0"
 
 [tool.poetry.dev-dependencies]
 
