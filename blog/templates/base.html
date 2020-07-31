@@ -28,6 +28,12 @@
 
         
         <p><em>A Django project example.</em></p>
+
+        <div>
+          <form method="GET" action="{% url 'article_search' %}">
+            <input type="text" name="query" placeholder="Search for an article"/>
+          </form>
+        </div>
         
       </header>
     </div>

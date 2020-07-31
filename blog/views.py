@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import PermissionDenied
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound, HttpRequest
 from django.urls import reverse_lazy
@@ -58,8 +59,16 @@ class ArticleCreate(LoginRequiredMixin, generic.CreateView):
         article.author = self.request.user
         article.save()
 
-        return redirect(article.get_absolute_url)
+        return redirect(article.get_absolute_url())
 
+
+def article_search(request):
+    query = request.GET.get('query', '')
+    articles = Article.objects.filter(Q(title__icontains=query)|Q(content__icontains=query)).order_by('-published_at')
+    p = Paginator(articles, 4)
+    page = request.GET.get('page', 1)
+
+    return render(request, 'article_search.html', {'page': p.get_page(page), 'query': query})
 
 class ArticleEdit(LoginRequiredMixin, generic.UpdateView):
     model = Article

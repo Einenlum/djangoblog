@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load markdownify %}
+
+{% block center_content %}
+
+<section id="home">
+    <h2>Articles containing "<i>{{ query }}</i>"</h2>
+
+    {% if user.is_authenticated %}
+      <div style="margin-right:0; text-align: right">
+        <a href="{% url 'article_create' %}">Add an article</a>
+      </div> 
+    {% endif %}
+
+  <ul>
+    {% if page|length %}
+      {% for article in page %}
+
+
+      <li class="first" >
+        <h1><a href="{{ article.get_absolute_url }}" title="{{ article.title }}">{{ article.title }}</a></h1>
+        <aside>
+      <ul>
+          <li>
+              <time class="post-date" datetime="{{ article.published_at.isoformat }}">
+              {{ article.published_at.day }}
+              /
+              {{ article.published_at.month }}
+              /
+              {{ article.published_at.year }}
+              </time>
+          </li>
+
+          <li>By <a href="{{ article.author.get_author_absolute_url }}">{{ article.author }}</a></li>
+          
+          <li>
+              Categories:
+              <em>
+                  {% for category in article.categories.all %}
+                      
+                      <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>,
+                  {% endfor %}
+              </em>
+          </li>
+
+          <li>{{ article.read_in_minutes }} minute{{ article.read_in_minutes|pluralize }} read</li>
+      </ul>
+  </aside>
+
+        
+
+        <p>{{ article.content|markdownify|truncatechars:200 }}</p>
+        
+        <a href="{{ article.get_absolute_url }}">Read more…</a>
+        
+      </li>
+      
+      {% endfor %}
+    {% else %}
+      <p>No article here for now.</p>
+    {% endif %}
+    
+    
+
+  </ul>
+</section>
+
+{% include 'pagination.html' with current_page_url='' %}
+
+{% endblock %}

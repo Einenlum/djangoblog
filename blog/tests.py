@@ -68,3 +68,12 @@ class ArticleIndexViewTest(TestCase):
         self.assertEqual(mitchell_response.status_code, 200)
         self.assertNotContains(mitchell_response, "How to program")
         self.assertContains(mitchell_response, "No article here for now.")
+
+    def test_article_search(self):
+        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
+        article_1 = create_article(robert, 'How to program', 'Some content')
+        article_2 = create_article(robert, 'How to cook', 'Some content')
+
+        response = self.client.get(reverse('article_search') + '?query=cook')
+        self.assertContains(response, 'cook')
+        self.assertNotContains(response, 'program')

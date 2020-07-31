@@ -41,6 +41,18 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "main"
+description = "A configurable set of panels that display various debug information about the current request/response."
+name = "django-debug-toolbar"
+optional = false
+python-versions = ">=3.5"
+version = "2.2"
+
+[package.dependencies]
+Django = ">=1.11"
+sqlparse = ">=0.2.0"
+
+[[package]]
+category = "main"
 description = "Markdown template filter for Django."
 name = "django-markdownify"
 optional = false
@@ -116,7 +128,7 @@ python-versions = "*"
 version = "0.5.1"
 
 [metadata]
-content-hash = "6c921db5fc21973e9e70f8d620dbc3ff21017aaa40c24d32dfe08c52b8c25c65"
+content-hash = "41335f9b59139bfa95e00c6facd298a36d1571a56b8246177ae8a05474d79843"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -131,6 +143,10 @@ bleach = [
 django = [
     {file = "Django-3.0.8-py3-none-any.whl", hash = "sha256:5457fc953ec560c5521b41fad9e6734a4668b7ba205832191bbdff40ec61073c"},
     {file = "Django-3.0.8.tar.gz", hash = "sha256:31a5fbbea5fc71c99e288ec0b2f00302a0a92c44b13ede80b73a6a4d6d205582"},
+]
+django-debug-toolbar = [
+    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
+    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
 ]
 django-markdownify = [
     {file = "django-markdownify-0.8.1.tar.gz", hash = "sha256:5460fc41db2da02c57e2f49f55258aa71a74af48c21b7989985b0a860069a954"},

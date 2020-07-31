@@ -36,11 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'markdownify',
     'blog',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,3 +131,7 @@ MARKDOWNIFY_WHITELIST_TAGS = {
 
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL = '/auth/login'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
