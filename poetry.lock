@@ -53,6 +53,14 @@ sqlparse = ">=0.2.0"
 
 [[package]]
 category = "main"
+description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
+name = "django-environ"
+optional = false
+python-versions = "*"
+version = "0.4.5"
+
+[[package]]
+category = "main"
 description = "Markdown template filter for Django."
 name = "django-markdownify"
 optional = false
@@ -136,7 +144,7 @@ python-versions = "*"
 version = "0.5.1"
 
 [metadata]
-content-hash = "818207829423323aec295def10f7476ec1d0b4a94a61b0e981941a40381d9db1"
+content-hash = "ebc3d79d5f2057a5c25249bf3e7e348616e83a602cbc67ea11f9271299bf60ee"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -155,6 +163,10 @@ django = [
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
     {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
+]
+django-environ = [
+    {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
+    {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
 ]
 django-markdownify = [
     {file = "django-markdownify-0.8.1.tar.gz", hash = "sha256:5460fc41db2da02c57e2f49f55258aa71a74af48c21b7989985b0a860069a954"},

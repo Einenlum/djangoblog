@@ -4,6 +4,7 @@ This is just a toy project to play with Django, its permissions, its ORM, how to
 
 ## Install
 
+`cp .env.dist .env`
 `poetry install`
 
 ## Tests
