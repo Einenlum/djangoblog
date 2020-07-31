@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import environ
+import django_heroku
 
 env = environ.Env(
-    USE_DEVELOPMENT_ENV=(bool, False)
+    USE_DEVELOPMENT_ENV=(bool, False),
+    DATABASE_URL=(str, '')
 )
 
 if os.path.exists('./.env'):
@@ -97,16 +99,21 @@ if env('USE_DEVELOPMENT_ENV'):
         }
     }
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('DATABASE_NAME'),
-            'USER': env('DATABASE_USER'),
-            'PASSWORD': env('DATABASE_PASSWORD'),
-            'HOST': env('DATABASE_HOST'),
-            'PORT': env('DATABASE_PORT'),
+    if env('DATABASE_URL'):
+        DATABASES = {
+            'default': env('DATABASE_URL')
         }
-    }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': env('DATABASE_NAME'),
+                'USER': env('DATABASE_USER'),
+                'PASSWORD': env('DATABASE_PASSWORD'),
+                'HOST': env('DATABASE_HOST'),
+                'PORT': env('DATABASE_PORT'),
+            }
+        }
 
 
 AUTH_USER_MODEL = 'blog.User'
@@ -164,3 +171,5 @@ INTERNAL_IPS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+django_heroku.settings(locals())
