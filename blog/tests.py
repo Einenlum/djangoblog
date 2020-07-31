@@ -1,7 +1,9 @@
 from django.test import TestCase
-from django.urls import reverse, resolve
+from django.urls import resolve, reverse
+
 from .models import Article, Category, User
-from .views import category_show
+from .views.category import category_show
+
 
 def create_user(username, email, password):
     return User.objects.create_user(
