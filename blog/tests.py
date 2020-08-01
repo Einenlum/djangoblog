@@ -27,6 +27,7 @@ def create_article(author, title, content, categories = []):
 
     return article
 
+
 class ArticleIndexViewTest(TestCase):
     def test_no_articles(self):
         response = self.client.get(reverse('index'))
@@ -80,6 +81,26 @@ class ArticleIndexViewTest(TestCase):
         self.assertContains(response, 'cook')
         self.assertNotContains(response, 'program')
 
+    def test_comment_article(self):
+        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
+        article = create_article(robert, 'First article', 'Some content')
+        self.client.login(username='robert', password='LoremIpsum78')
+
+        response = self.client.post(reverse('comment_create', kwargs={'article_slug': article.slug}), {'comment_content': 'Some comment about the article'})
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.get(reverse('article_show', kwargs={'slug': article.slug}))
+        self.assertContains(response, 'Some comment about the article')
+
+    def test_create_article(self):
+        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
+        self.client.login(username='robert', password='LoremIpsum78')
+
+        response = self.client.post(reverse('article_create'), {'title': 'Some title', 'content': 'Some content'})
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.get(reverse('article_show', kwargs={'slug': 'some-title'}))
+        self.assertContains(response, 'Some content')
 
 class SecurityTest(TestCase):
     def test_signup_page_shows_up(self):
@@ -88,7 +109,7 @@ class SecurityTest(TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, 'Sign up')
 
-    def test__signup_is_disabled(self):
+    def test_signup_is_disabled(self):
         with self.settings(DISABLE_SIGNUP=True):
             response = self.client.get(reverse('signup'))
 

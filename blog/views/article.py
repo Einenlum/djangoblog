@@ -6,9 +6,7 @@ from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
-from pprint import pprint
-
-from blog.models import Article
+from blog.models import Article, Comment
 
 
 def index(request: HttpRequest):
@@ -30,7 +28,6 @@ class ArticleCreate(LoginRequiredMixin, generic.CreateView):
     template_name = 'article/create.html'
 
     def form_valid(self, form):
-        pprint(form)
         article = form.save(commit=False)
         article.author = self.request.user
         article.save()
