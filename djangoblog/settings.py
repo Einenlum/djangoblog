@@ -28,6 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 USE_DEVELOPMENT_ENV = env('USE_DEVELOPMENT_ENV')
 DISABLE_SIGNUP = env('DISABLE_SIGNUP')
+ADMIN_PATH = env('ADMIN_PATH')
 
 
 # Quick-start development settings - unsuitable for production
