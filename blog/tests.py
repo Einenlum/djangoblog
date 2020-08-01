@@ -79,3 +79,17 @@ class ArticleIndexViewTest(TestCase):
         response = self.client.get(reverse('article_search') + '?query=cook')
         self.assertContains(response, 'cook')
         self.assertNotContains(response, 'program')
+
+
+class SecurityTest(TestCase):
+    def test_signup_page_shows_up(self):
+        with self.settings(DISABLE_SIGNUP=False):
+            response = self.client.get(reverse('signup'))
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Sign up')
+
+    def test__signup_is_disabled(self):
+        with self.settings(DISABLE_SIGNUP=True):
+            response = self.client.get(reverse('signup'))
+
+            self.assertEqual(response.status_code, 403)

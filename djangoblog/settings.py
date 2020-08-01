@@ -16,7 +16,8 @@ import django_heroku
 
 env = environ.Env(
     USE_DEVELOPMENT_ENV=(bool, False),
-    DATABASE_URL=(str, '')
+    DATABASE_URL=(str, ''),
+    DISABLE_SIGNUP=(bool, False),
 )
 
 if os.path.exists('./.env'):
@@ -24,6 +25,9 @@ if os.path.exists('./.env'):
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+USE_DEVELOPMENT_ENV = env('USE_DEVELOPMENT_ENV')
+DISABLE_SIGNUP = env('DISABLE_SIGNUP')
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,7 +37,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('USE_DEVELOPMENT_ENV')
+DEBUG = USE_DEVELOPMENT_ENV
 
 ALLOWED_HOSTS = ['*']
 
@@ -52,7 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = []
-if env('USE_DEVELOPMENT_ENV'):
+if USE_DEVELOPMENT_ENV:
     MIDDLEWARE = [
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
@@ -91,7 +95,7 @@ WSGI_APPLICATION = 'djangoblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if env('USE_DEVELOPMENT_ENV'):
+if USE_DEVELOPMENT_ENV:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

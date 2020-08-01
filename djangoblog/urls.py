@@ -31,3 +31,4 @@ if settings.DEBUG:
     ] + urlpatterns
 
 handler404 = 'blog.views.handler404'
+handler403 = 'blog.views.handler403'
