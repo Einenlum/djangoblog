@@ -114,3 +114,10 @@ class SecurityTest(TestCase):
             response = self.client.get(reverse('signup'))
 
             self.assertEqual(response.status_code, 403)
+
+    def test_signup(self):
+        with self.settings(DISABLE_SIGNUP=False):
+            response = self.client.post(reverse('signup'), {'email': 'email@email.com', 'username': 'username', 'password1': 'SomeWeirdPa55word', 'password2': 'SomeWeirdPa55word'})
+            self.assertEqual(response.status_code, 302)
+
+            self.assertIsNotNone(User.objects.get(username='username'))
