@@ -29,14 +29,16 @@ def create_article(author, title, content, categories = []):
 
 
 class ArticleIndexViewTest(TestCase):
+    def setUp(self):
+        self.robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
+
     def test_no_articles(self):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No article here for now.")
 
     def test_one_article(self):
-        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
-        create_article(robert, 'First article', 'Some content')
+        create_article(self.robert, 'First article', 'Some content')
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "First article")
@@ -45,8 +47,7 @@ class ArticleIndexViewTest(TestCase):
     def test_article_in_category(self):
         music_category = create_category('music')
         programming_category = create_category('programming')
-        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
-        article = create_article(robert, 'How to program', 'Some content', [programming_category])
+        article = create_article(self.robert, 'How to program', 'Some content', [programming_category])
 
         programming_response = self.client.get(reverse('category_show', kwargs={'pk': programming_category.id}))
         self.assertEqual(programming_response.status_code, 200)
@@ -58,11 +59,10 @@ class ArticleIndexViewTest(TestCase):
         self.assertContains(music_response, "No article here for now.")
     
     def test_article_in_authors_list(self):
-        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
         mitchell = create_user('mitchell', 'mitchell@email.com', 'IL0veY0u77')
-        article = create_article(robert, 'How to program', 'Some content')
+        article = create_article(self.robert, 'How to program', 'Some content')
 
-        robert_response = self.client.get(reverse('author_show', kwargs={'username': robert.username}))
+        robert_response = self.client.get(reverse('author_show', kwargs={'username': self.robert.username}))
         self.assertEqual(robert_response.status_code, 200)
         self.assertContains(robert_response, "How to program")
         self.assertContains(robert_response, "Some content")
@@ -73,17 +73,15 @@ class ArticleIndexViewTest(TestCase):
         self.assertContains(mitchell_response, "No article here for now.")
 
     def test_article_search(self):
-        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
-        article_1 = create_article(robert, 'How to program', 'Some content')
-        article_2 = create_article(robert, 'How to cook', 'Some content')
+        article_1 = create_article(self.robert, 'How to program', 'Some content')
+        article_2 = create_article(self.robert, 'How to cook', 'Some content')
 
         response = self.client.get(reverse('article_search') + '?query=cook')
         self.assertContains(response, 'cook')
         self.assertNotContains(response, 'program')
 
     def test_comment_article(self):
-        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
-        article = create_article(robert, 'First article', 'Some content')
+        article = create_article(self.robert, 'First article', 'Some content')
         self.client.login(username='robert', password='LoremIpsum78')
 
         response = self.client.post(reverse('comment_create', kwargs={'article_slug': article.slug}), {'comment_content': 'Some comment about the article'})
@@ -93,14 +91,25 @@ class ArticleIndexViewTest(TestCase):
         self.assertContains(response, 'Some comment about the article')
 
     def test_create_article(self):
-        robert = create_user('robert', 'robert@email.com', 'LoremIpsum78')
         self.client.login(username='robert', password='LoremIpsum78')
 
         response = self.client.post(reverse('article_create'), {'title': 'Some title', 'content': 'Some content'})
         self.assertEqual(response.status_code, 302)
 
         response = self.client.get(reverse('article_show', kwargs={'slug': 'some-title'}))
+
         self.assertContains(response, 'Some content')
+
+    def test_edit_article(self):
+        self.client.login(username='robert', password='LoremIpsum78')
+        article = create_article(self.robert, 'Original title', 'Original content')
+
+        response = self.client.post(reverse('article_edit', kwargs={'slug': article.slug}), {'title': 'New title', 'content': 'New content'})
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.get(reverse('article_show', kwargs={'slug': article.slug}))
+        self.assertContains(response, 'New title')
+        self.assertContains(response, 'New content')
 
 class SecurityTest(TestCase):
     def test_signup_page_shows_up(self):
