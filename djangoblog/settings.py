@@ -18,6 +18,10 @@ env = environ.Env(
     USE_DEVELOPMENT_ENV=(bool, False),
     DATABASE_URL=(str, ''),
     DISABLE_SIGNUP=(bool, False),
+    AWS_ACCESS_KEY_ID=(str, ''),
+    AWS_SECRET_ACCESS_KEY=(str, ''),
+    S3_BUCKET_NAME=(str, ''),
+    S3_BUCKET_REGION=(str, ''),
 )
 
 if os.path.exists('./.env'):
@@ -29,6 +33,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 USE_DEVELOPMENT_ENV = env('USE_DEVELOPMENT_ENV')
 DISABLE_SIGNUP = env('DISABLE_SIGNUP')
 ADMIN_PATH = env('ADMIN_PATH')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY =  env('AWS_SECRET_ACCESS_KEY')
 
 
 # Quick-start development settings - unsuitable for production
@@ -50,7 +56,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
+    'storages',
     'debug_toolbar',
     'markdownify',
     'blog',
@@ -174,7 +182,10 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_STORAGE_BUCKET_NAME = env('S3_BUCKET_NAME')
+AWS_S3_REGION_NAME = env('S3_BUCKET_REGION')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 django_heroku.settings(locals())

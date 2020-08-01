@@ -1,8 +1,12 @@
 from __future__ import annotations
+import io
+import sys
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
 from django.shortcuts import reverse
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
 
 
 class User(AbstractUser):
@@ -37,6 +41,19 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+
+        if self.cover:
+            """
+            Resize the image to a maximum of 1200x800, before saving
+            """
+            image = Image.open(self.cover)
+            output = io.BytesIO()
+            image.thumbnail((1200, 800))
+
+            image.save(output, format='JPEG', quality=90)
+            output.seek(0)
+
+            self.cover = InMemoryUploadedFile(output, 'ImageField', '%s.jpg' % self.cover.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
 
         return super().save(*args, **kwargs)
 
