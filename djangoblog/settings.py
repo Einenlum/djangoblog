@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'algoliasearch_django',
     'debug_toolbar',
     'markdownify',
     'blog',
@@ -185,6 +186,11 @@ INTERNAL_IPS = [
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_STORAGE_BUCKET_NAME = env('S3_BUCKET_NAME')
 AWS_S3_REGION_NAME = env('S3_BUCKET_REGION')
+
+ALGOLIA = {
+    'APPLICATION_ID': env('ALGOLIA_APPLICATION_ID'),
+    'API_KEY': env('ALGOLIA_API_KEY'),
+}
 
 MEDIA_URL = '/media/'
 

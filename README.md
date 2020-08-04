@@ -8,6 +8,7 @@ Visit the [heroku app](https://djangoblog-einenlum.herokuapp.com/).
 
 * File storage: S3 (thanks to `django-storages`)
 * DB: postgres in production, sqlite in development
+* Search: Algolia is used (overkill for a blog toy project, but just for fun)
 
 ## Install
 

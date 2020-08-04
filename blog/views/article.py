@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Case, When, Value
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
+from algoliasearch_django import raw_search
 
 from blog.models import Article, Comment
 
@@ -39,7 +40,13 @@ class ArticleCreate(LoginRequiredMixin, generic.CreateView):
 
 def article_search(request):
     query = request.GET.get('query', '')
-    articles = Article.objects.filter(Q(title__icontains=query)|Q(content__icontains=query)).order_by('-published_at')
+    response = raw_search(Article, query)
+    ids = [article['objectID'] for article in response['hits']]
+    # Allow to get the articles in the specific sequence of ids we gave, thanks to case when id = x then pos=1…
+    whens = Case(*[When(id=id, then=Value(pos)) for (pos, id) in enumerate(ids)])
+
+    # We prefer to have real django orm objects instead of algolia objects, to be able to use the paginator
+    articles = Article.objects.filter(id__in=ids).order_by(whens)
     p = Paginator(articles, 4)
     page = request.GET.get('page', 1)
 
