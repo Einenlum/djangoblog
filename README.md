@@ -21,6 +21,8 @@ In your virtual env:
 
 `python manage.py test blog`
 
+Tests are also automatically run on Github Actions.
+
 ## Run
 
 In your virtual env:
