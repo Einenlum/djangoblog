@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import environ
-import django_heroku
 
 env = environ.Env(
     USE_DEVELOPMENT_ENV=(bool, False),
@@ -22,6 +21,12 @@ env = environ.Env(
     AWS_SECRET_ACCESS_KEY=(str, ''),
     S3_BUCKET_NAME=(str, ''),
     S3_BUCKET_REGION=(str, ''),
+    ADMIN_PATH=(str, 'admin/'),
+    DATABASE_NAME=(str, ''),
+    DATABASE_USER=(str, ''),
+    DATABASE_PASSWORD=(str, ''),
+    DATABASE_HOST=(str, ''),
+    DATABASE_PORT=(str, ''),
 )
 
 if os.path.exists('./.env'):
@@ -194,4 +199,6 @@ ALGOLIA = {
 
 MEDIA_URL = '/media/'
 
-django_heroku.settings(locals())
+if 'HEROKU' in os.environ:
+    import django_heroku
+    django_heroku.settings(locals())
