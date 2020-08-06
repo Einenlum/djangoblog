@@ -22,6 +22,7 @@ env = environ.Env(
     AWS_SECRET_ACCESS_KEY=(str, ''),
     S3_BUCKET_NAME=(str, ''),
     S3_BUCKET_REGION=(str, ''),
+    ADMIN_PATH=(str, 'admin/')
 )
 
 if os.path.exists('./.env'):
